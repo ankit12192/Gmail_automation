@@ -1,5 +1,5 @@
 """
-This Script can be used to wish Happpy Birthday by just using python command line
+This Script can be used to send email  by just using python command line
 prerequisite : The following libraries should be installed
 1. urllib
 2. getpass
