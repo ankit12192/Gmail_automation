@@ -28,11 +28,11 @@ browser.get("https://accounts.google.com/ServiceLogin?service=mail&continue=http
 
 inputElement = browser.find_element_by_name('Email')
 #phone =raw_input("Enter email - > ")
-inputElement.send_keys('ank9222')
+inputElement.send_keys('YOur email id')
 inputElement.send_keys(Keys.ENTER)
 time.sleep(3)
 inputElement3 = browser.find_element_by_name('Passwd')
-inputElement3.send_keys('qwer12192')
+inputElement3.send_keys('Your password ')
 inputElement3.send_keys(Keys.ENTER)
 time.sleep(2)
 for i in range(1,3):
