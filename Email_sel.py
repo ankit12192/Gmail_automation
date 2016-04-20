@@ -33,12 +33,12 @@ from selenium.webdriver.common.action_chains import ActionChains
 browser = webdriver.Firefox()
 Ac =ActionChains(browser).key_down(Keys.COMMAND+Keys.TAB)
 ActionChains.send_keys(Ac)
-browser.get("https://accounts.google.com/ServiceLogin?service=mail&continue=https://mail.google.com/mail/#identifier")
+asa = browser.get("https://accounts.google.com/ServiceLogin?service=mail&continue=https://mail.google.com/mail/#identifier")
 
 def login_gmail():
 	inputElement = browser.find_element_by_name('Email')
 	#phone =raw_input("Enter email - > ")
-	inputElement.send_keys('atp12192')
+	inputElement.send_keys('ank9222')
 	inputElement.send_keys(Keys.ENTER)
 	time.sleep(3)
 	inputElement3 = browser.find_element_by_name('Passwd')
@@ -47,62 +47,71 @@ def login_gmail():
 
 def send_mail():
  try:
-  for i in xrange(int(4)):
+  for i in xrange(int(1)):
    inputElement4=browser.find_element_by_xpath('//*[@id=":jb"]/div').click()
    time.sleep(3)
    inputElement5=browser.find_element_by_tag_name("textarea").send_keys("anktest12192@outlook.com",Keys.ENTER)
    #inputElement6=browser.find_element_by_class_name('aoT').send_keys("Testing Automation "+str(random.randint(1, 1000000)))#NON THERADED
    inputElement6=browser.find_element_by_class_name('aoT').send_keys("Testing Automation ") #THREADED
    inputElement7=browser.find_element_by_xpath("//div[@aria-label='Message Body']").send_keys("This is message number "+str(random.randint(1,999922922)),Keys.COMMAND+Keys.ENTER)
+   #print browser.find_element_by_xpath("//div[@aria-label='Message Body']").text
+   #,Keys.COMMAND+Keys.ENTER)
  finally:
   time.sleep(1)
   browser.delete_all_cookies()
   browser.close()
 
-"""
-9721457945
-rameshtrph@gmail.com
-"""
-
 login_gmail()
-time.sleep(10)
-#//*[@id="yui_3_12_0_1_1459855716082_1505"]
-
-
-
-
-#//*[@id=":uw"]
-#//*[@id=":vg"]/div[1]/div[2]/div[1]/table/tbody/tr[1]/td[2]/div/div/span
-
+time.sleep(3)
 def open_compose():
 	inputElement4=browser.find_element_by_xpath('//*[@id=":jb"]/div').click()
-
-#open_compose()
 
 def star_email():
 	inputElement4=browser.find_element_by_xpath('//div[@aria-label="Advanced search options"]').click()
 
-
-
 def Adv_search_email():
 	inputElement4=browser.find_element_by_xpath('//div[@aria-label="Advanced search options"]').click()
 
-
-
 def Basic_search():
-	inputElement4=browser.find_element_by_id('gbqfq').send_keys("spt12192@gmail.com",Keys.ENTER)
+	inputElement4=browser.find_element_by_id('gbqfq').send_keys("ank9222@gmail.com",Keys.ENTER)
 	time.sleep(4)
 	browser.find_element_by_xpath('//div[@aria-label="pp"])').click()
 
 
-#Basic_search()
-
-
 def Select_all():
-	inputElement4=browser.find_element_by_xpath('//div[@aria-label="Select"]').click()
+	inputElement4=browser.find_element_by_css_selector('//div[@aria-label="Select"]').click()
 
-#Select_all()
-#Basic_search()
+def tap_setting():
+	browser.find_element_by_xpath("//*[@class='aos T-I-J3 J-J5-Ji']").click()
 
 
-send_mail()
+
+
+def change_sinnature():
+	#browser.find_element_by_css_selector('.ash.T-I').click()
+	asa=browser.get("https://mail.google.com/mail/u/0/#settings/general")
+	time.sleep(3)
+	xt=browser.find_element_by_xpath("//div[@aria-label='Signature']").send_keys("Ankit 1111")
+	#print browser.find_element_by_xpath("//div[@aria-label='Signature']").text
+	time.sleep(2)
+	print browser.find_element_by_tag_name("button").get_attribute("guidedhelpid")
+
+def selecting_random_email(num):
+
+	for i in xrange(int(num)):
+		time.sleep(3)
+		m=random.randint(1,10)
+		print("Mail Number "+str(m)+" is selected")
+		browser.find_element_by_xpath("//div[@role='tabpanel'][1]//table//tr"+str([m])).click()
+		time.sleep(3)
+
+
+#tap_setting()
+
+time.sleep(3)
+def lang():
+	a=browser.find_element_by_xpath("//*[@class='a5p']")
+	#print a.get_attribute(a)
+	a.send_keys("English (UK)")
+
+change_sinnature()
