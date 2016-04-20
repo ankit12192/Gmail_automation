@@ -11,12 +11,12 @@ step to run
 python Email_sel.py
 
 """
-
 # You must have Firefox installed (For now I am using firefox web driver )
-
 #---------------------------
 #	Importing Modules
 #---------------------------
+
+
 
 __author__ = 'Ankit'
 import  requests
@@ -28,7 +28,10 @@ import getpass
 import time
 import random
 from selenium.webdriver.common.action_chains import ActionChains
+import matplotlib.pyplot as plt
 #n=raw_input("How many Mail ?")
+
+Time_list=[]
 
 browser = webdriver.Firefox()
 Ac =ActionChains(browser).key_down(Keys.COMMAND+Keys.TAB)
@@ -36,16 +39,24 @@ ActionChains.send_keys(Ac)
 asa = browser.get("https://accounts.google.com/ServiceLogin?service=mail&continue=https://mail.google.com/mail/#identifier")
 
 def login_gmail():
+	start_time = time.time()
 	inputElement = browser.find_element_by_name('Email')
 	#phone =raw_input("Enter email - > ")
 	inputElement.send_keys('ank9222')
 	inputElement.send_keys(Keys.ENTER)
-	time.sleep(3)
+	time.sleep(2)
 	inputElement3 = browser.find_element_by_name('Passwd')
 	inputElement3.send_keys('qwer12192')
 	inputElement3.send_keys(Keys.ENTER)
+	time.sleep(2)
+	if browser.find_element_by_xpath("//*[@class='aos T-I-J3 J-J5-Ji']").is_displayed()==True:
+		s0=time.time()-start_time
+		print("--- %s seconds ---" % (time.time() - start_time))
+		print s0
+		Time_list.append(s0)
 
 def send_mail():
+ start_time = time.time()
  try:
   for i in xrange(int(1)):
    inputElement4=browser.find_element_by_xpath('//*[@id=":jb"]/div').click()
@@ -56,13 +67,15 @@ def send_mail():
    inputElement7=browser.find_element_by_xpath("//div[@aria-label='Message Body']").send_keys("This is message number "+str(random.randint(1,999922922)),Keys.COMMAND+Keys.ENTER)
    #print browser.find_element_by_xpath("//div[@aria-label='Message Body']").text
    #,Keys.COMMAND+Keys.ENTER)
+   s0=time.time()-start_time
+   Time_list.append(s0)
  finally:
   time.sleep(1)
   browser.delete_all_cookies()
   browser.close()
 
 login_gmail()
-time.sleep(3)
+
 def open_compose():
 	inputElement4=browser.find_element_by_xpath('//*[@id=":jb"]/div').click()
 
@@ -114,4 +127,17 @@ def lang():
 	#print a.get_attribute(a)
 	a.send_keys("English (UK)")
 
-change_sinnature()
+send_mail()
+
+print Time_list
+
+def Plot_graph():
+
+	D = {u'Login Module ':Time_list[0], u'Send Email module':Time_list[1]}
+	plt.bar(range(len(D)), D.values(), align='center')
+	plt.xticks(range(len(D)), D.keys())
+	plt.xlabel("Modules")
+	plt.ylabel("Time in seconds")
+	plt.show()
+
+Plot_graph()
