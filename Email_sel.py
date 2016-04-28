@@ -29,11 +29,10 @@ import getpass
 import time
 import random
 import matplotlib.pyplot as plt
-
 Time_list=[]
-
 browser = webdriver.Firefox()
 browser.get("https://accounts.google.com/ServiceLogin?service=mail&continue=https://mail.google.com/mail/#identifier")
+x='No messages matched your search'
 
 def login_gmail(email,password):
 
@@ -53,7 +52,8 @@ def send_mail(n,to):
         browser.find_element_by_tag_name("textarea").send_keys(to,Keys.ENTER)
         #inputElement6=browser.find_element_by_class_name('aoT').send_keys("Testing Automation "+str(random.randint(1, 1000000)))#NON THERADED
         browser.find_element_by_class_name('aoT').send_keys("Testing Automation ") #THREADED
-        browser.find_element_by_xpath("//div[@aria-label='Message Body']").send_keys("This is message number "+str(random.randint(1,999922922)),Keys.COMMAND+Keys.ENTER)
+        browser.find_element_by_xpath("//div[@aria-label='Message Body']").send_keys("This is message number "
+        +str(random.randint(1,999922922)),Keys.COMMAND+Keys.ENTER)
         print browser.find_element_by_xpath("//div[@aria-label='Message Body']").text
         total_time=time.time()-start_time
         Time_list.append(total_time)
@@ -63,19 +63,35 @@ def open_compose():
     browser.find_element_by_xpath("//*[@class='T-I J-J5-Ji T-I-KE L3']").click()
 	#browser.find_element_by_xpath('//*[@class=":aic"]/div').click()
 
-def star_email():
-	start_time = time.time()
-	inputElement4=browser.find_element_by_xpath('//div[@aria-label="Advanced search options"]').click()
+def Adv_search_email(to,subject):
+    start_time = time.time()
+    browser.find_element_by_xpath('//div[@aria-label="Advanced search options"]').click()
+    time.sleep(3)
+    #browser.find_element_by_class_name('ZH nr aQf').send_keys("HEYY")
+    browser.find_element_by_xpath("//*[@class='ZH nr aQa']").send_keys(to,Keys.TAB)
+    time.sleep(1)
+    browser.find_element_by_xpath("//*[@class='ZH nr aQd']").send_keys(subject)
+    browser.find_element_by_xpath("//*[@data-tooltip='Search Mail']").click()
+    time.sleep(2)
+    a= browser.find_element_by_xpath("//*[@class='ae4 UI']").text
+    if x in a:
+        print "NO messege"
+    else:
+        print "There are messages "
+    total_time=time.time()-start_time
+    Time_list.append(total_time)
 
-def Adv_search_email():
-	browser.find_element_by_xpath('//div[@aria-label="Advanced search options"]').click()
-
-def Basic_search():
-	start_time = time.time()
-	inputElement4=browser.find_element_by_id('gbqfq').send_keys("ank9222@gmail.com",Keys.ENTER)
-	time.sleep(4)
-	browser.find_element_by_xpath('//div[@aria-label="pp"])').click()
-
+def Basic_search(key):
+    start_time = time.time()
+    browser.find_element_by_xpath("//*[@aria-owns='gs_sbt50']").send_keys(key,Keys.ENTER)
+    a= browser.find_element_by_xpath("//*[@class='ae4 UI']").text
+    print a
+    if x in a:
+        print "NO mail found"
+    else:
+        print "Mails found"
+    total_time=time.time()-start_time
+    Time_list.append(total_time)
 def Select_all():
 	start_time = time.time()
 	browser.find_element_by_css_selector('//div[@aria-label="Select"]').click()
@@ -94,23 +110,26 @@ def change_signature (signature):
     browser.find_element_by_xpath(".//*[@guidedhelpid='save_changes_button']").click()
     total_time=time.time()-start_time
     Time_list.append(total_time)
-"""Working """
+
 def selecting_random_email(num):
-	start_time = time.time()
-	for i in xrange(int(num)):
-		time.sleep(3)
-		m=random.randint(1,10)
-		print("Mail Number "+str(m)+" is selected")
-		browser.find_element_by_xpath("//div[@role='tabpanel'][1]//table//tr"+str([m])).click()
-		total_time=time.time()-start_time
-		Time_list.append(total_time)
+    start_time = time.time()
+    for i in xrange(int(num)):
+        time.sleep(3)
+        m = random.randint(1, 10)
+        print("Mail Number " + str(m) + " is selected")
+        browser.find_element_by_xpath("//div[@role='tabpanel'][1]//table//tr" + str([m])).click()
+        time.sleep(2)
+        browser.find_element_by_xpath("//*[@class='ar6 T-I-J3 J-J5-Ji']").click()
+        total_time = time.time() - start_time
+        Time_list.append(total_time)
+
 
 def Plot_graph():
-
-	Data = {u'Login Module ':Time_list[0], u'Send Email module':Time_list[1],
-            u'Selecting any email':Time_list[2],
-            u'Change Signature ':Time_list[3],u'Change language':Time_list[4],u'create filter':Time_list[5],
-            u'create label':Time_list[6],u'main module':Time_list[7]}
+	Data = {u'Login Module ':Time_list[0], u'Send':Time_list[1],
+            u'Select email':Time_list[2],
+            u'Signature ':Time_list[3],u' language':Time_list[4],u'filter':Time_list[5],
+            u'label':Time_list[6],u'main module':Time_list[7],u'Star email':Time_list[8],u'remove star':Time_list[9]
+            ,u'star':Time_list[10],u'Search':Time_list[11],u'Advance search':Time_list[12]}
 
 	plt.bar(range(len(Data)), Data.values(), align='center')
 	plt.xticks(range(len(Data)), Data.keys())
@@ -140,16 +159,15 @@ def create_filter(to,subject):
     total_time=time.time()-start_time
     Time_list.append(total_time)
 
-
-
-def create_label(name):
+def create_label():
     start_time = time.time()
     browser.get("https://mail.google.com/mail/u/0/#settings/general")
     time.sleep(2)
     browser.find_element_by_link_text("Labels").click()
     browser.find_element_by_class_name("alZ").click()
-    browser.find_element_by_class_name("xx").send_keys(name)
+    browser.find_element_by_class_name("xx").send_keys("Lable"+str(random.randint(1,100000)),Keys.COMMAND+Keys.ENTER)
     browser.find_element_by_name("ok").click()
+    browser.find_element_by_link_text("Inbox").click()
     total_time=time.time()-start_time
     Time_list.append(total_time)
 
@@ -163,21 +181,64 @@ def lang():
     total_time=time.time()-start_time
     Time_list.append(total_time)
 
+def star_email(n):
+
+    start_time = time.time()
+    for i in xrange(n):
+        a=browser.find_element_by_xpath("//div[@role='tabpanel'][1]//table//tr" + str([i+1]))
+        a.send_keys("")
+        browser.find_element_by_xpath("//*[@aria-label='Not starred']").click()
+        time.sleep(2)
+    total_time=time.time()-start_time
+    Time_list.append(total_time)
+def remove_star(n):
+    start_time = time.time()
+    for i in xrange(n):
+        a=browser.find_element_by_xpath("//div[@role='tabpanel'][1]//table//tr" + str([i+1]))
+        a.send_keys("h")
+        browser.find_element_by_xpath("//*[@aria-label='Starred']").click()
+        time.sleep(2)
+    total_time=time.time()-start_time
+    Time_list.append(total_time)
+
+def check_star():
+    start_time = time.time()
+    browser.find_element_by_link_text("Starred").click()
+    time.sleep(1)
+    a=  browser.find_element_by_xpath("//*[@class='ae4 UI']").text
+    if 'No starred messages.' in a:
+        print "NO messages "
+    else:
+        print "There are messages"
+    total_time=time.time()-start_time
+    Time_list.append(total_time)
+
 def main():
     start_time = time.time()
+    time.sleep(2)
     login_gmail("atp12192","qwer12192")
     time.sleep(4)
     send_mail(1,"ank9222@gmail.com")
     time.sleep(2)
     selecting_random_email(1)
+    time.sleep(3)
+    star_email(3)
+    time.sleep(3)
+    remove_star(2)
+    time.sleep(3)
+    check_star()
+    time.sleep(3)
     change_signature("Ankit Tiwari")
     time.sleep(3)
     lang()
     time.sleep(3)
     create_filter("abc@gmail.com","HII")
     time.sleep(3)
-    create_label("Test3")
-    time.sleep(2)
+    create_label()
+    time.sleep(3)
+    Basic_search("1234")
+    time.sleep(3)
+    Adv_search_email("ank","ank")
     total_time=time.time()-start_time
     Time_list.append(total_time)
 
