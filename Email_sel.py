@@ -44,19 +44,20 @@ def login_gmail(email,password):
   print("--- %s seconds ---" % (time.time() - start_time))
   Time_list.append(total_time)
 
-def send_mail(n,to):
+def send_mail(n,to,ch):
     start_time = time.time()
     for i in xrange(int(n)):
-        browser.find_element_by_xpath("//*[@class='T-I J-J5-Ji T-I-KE L3']").click()
-        time.sleep(3)
+        browser.find_element_by_xpath("//*[@gh='cm']").click()
+        time.sleep(2)
         browser.find_element_by_tag_name("textarea").send_keys(to,Keys.ENTER)
-        #inputElement6=browser.find_element_by_class_name('aoT').send_keys("Testing Automation "+str(random.randint(1, 1000000)))#NON THERADED
-        browser.find_element_by_class_name('aoT').send_keys("Testing Automation ") #THREADED
+        if ch =='NT':
+            browser.find_element_by_class_name('aoT').send_keys("Testing Automation "+str(random.randint(1, 1000000)))#NON THERADED
+        elif ch=="TH":
+            browser.find_element_by_class_name('aoT').send_keys("Testing Automation ") #THREADED
         browser.find_element_by_xpath("//div[@aria-label='Message Body']").send_keys("This is message number "
         +str(random.randint(1,999922922)),Keys.COMMAND+Keys.ENTER)
-        print browser.find_element_by_xpath("//div[@aria-label='Message Body']").text
-        total_time=time.time()-start_time
-        Time_list.append(total_time)
+    total_time=time.time()-start_time
+    Time_list.append(total_time)
 
 def open_compose():
     start_time = time.time()
@@ -92,6 +93,7 @@ def Basic_search(key):
         print "Mails found"
     total_time=time.time()-start_time
     Time_list.append(total_time)
+
 def Select_all():
 	start_time = time.time()
 	browser.find_element_by_css_selector('//div[@aria-label="Select"]').click()
@@ -191,6 +193,7 @@ def star_email(n):
         time.sleep(2)
     total_time=time.time()-start_time
     Time_list.append(total_time)
+
 def remove_star(n):
     start_time = time.time()
     for i in xrange(n):
@@ -213,11 +216,26 @@ def check_star():
     total_time=time.time()-start_time
     Time_list.append(total_time)
 
+def del_particular_email(m):
+    start_time = time.time()
+    browser.find_element_by_xpath("//div[@role='tabpanel'][1]//table//tr" + str([m])).click()
+    time.sleep(4)
+    #s=browser.find_element_by_xpath('/html/body/div[7]/div[3]/div/div[2]/div[1]/div[2]/div/div/div/div[1]/div[2]/div[1]/div/div[2]/div[3]')
+    s=browser.find_element_by_xpath('//div[@class="ar9 T-I-J3 J-J5-Ji"]')
+    s.click()
+    """time.sleep(1)
+    s.send_keys("Reply")
+    time.sleep(1)
+    s.click()"""
+    total_time = time.time() - start_time
+    Time_list.append(total_time)
+
+
 def main():
     start_time = time.time()
     time.sleep(2)
-    login_gmail("atp12192","qwer12192")
-    time.sleep(4)
+    login_gmail("ID","Password")
+    time.sleep(6)
     send_mail(1,"ank9222@gmail.com")
     time.sleep(2)
     selecting_random_email(1)
@@ -242,5 +260,5 @@ def main():
     total_time=time.time()-start_time
     Time_list.append(total_time)
 
+
 main()
-Plot_graph()
