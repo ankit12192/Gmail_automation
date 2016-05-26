@@ -125,7 +125,6 @@ def selecting_random_email(num):
         total_time = time.time() - start_time
         Time_list.append(total_time)
 
-
 def Plot_graph():
 	Data = {u'Login Module ':Time_list[0], u'Send':Time_list[1],
             u'Select email':Time_list[2],
@@ -230,11 +229,10 @@ def del_particular_email(m):
     total_time = time.time() - start_time
     Time_list.append(total_time)
 
-
 def main():
     start_time = time.time()
     time.sleep(2)
-    login_gmail("ID","Password")
+    login_gmail("atp12192","qwer12192")
     time.sleep(6)
     send_mail(1,"ank9222@gmail.com")
     time.sleep(2)
@@ -260,5 +258,17 @@ def main():
     total_time=time.time()-start_time
     Time_list.append(total_time)
 
+'''
+login_gmail("atp12192","qwer12192")
+time.sleep(5)
+send_mail("3","ank9222@gmail.com","NT")
+
+#time.sleep(5)
+"""
+#del_particular_email(1)
+'''
+
+#aria-label='Delete'
+#//*[@id=":5"]/div/div[1]/div[1]/div/div/div[2]/div[3]/div/div
 
 main()
