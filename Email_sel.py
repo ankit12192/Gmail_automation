@@ -10,7 +10,8 @@ prerequisite : The following libraries should be installed
 step to run
 python Email_sel.py
 """
-# You must have Firefox installed (For now I am using firefox web driver )
+
+
 #---------------------------
 #	Importing Modules
 #---------------------------
@@ -29,8 +30,15 @@ import getpass
 import time
 import random
 import matplotlib.pyplot as plt
+from selenium import webdriver
+
 Time_list=[]
-browser = webdriver.Firefox()
+
+# using chrome driver
+
+chromedriver = "/Users/webyog/Downloads/chromedriver-2"
+browser = webdriver.Chrome(chromedriver)
+
 browser.get("https://accounts.google.com/ServiceLogin?service=mail&continue=https://mail.google.com/mail/#identifier")
 x='No messages matched your search'
 
@@ -234,8 +242,8 @@ def main():
     time.sleep(2)
     login_gmail("atp12192","qwer12192")
     time.sleep(6)
-    send_mail(1,"ank9222@gmail.com")
-    time.sleep(2)
+    send_mail(1,"ank9222@gmail.com","TH")
+    time.sleep(4)
     selecting_random_email(1)
     time.sleep(3)
     star_email(3)
@@ -257,18 +265,5 @@ def main():
     Adv_search_email("ank","ank")
     total_time=time.time()-start_time
     Time_list.append(total_time)
-
-'''
-login_gmail("atp12192","qwer12192")
-time.sleep(5)
-send_mail("3","ank9222@gmail.com","NT")
-
-#time.sleep(5)
-"""
-#del_particular_email(1)
-'''
-
-#aria-label='Delete'
-#//*[@id=":5"]/div/div[1]/div[1]/div/div/div[2]/div[3]/div/div
 
 main()
