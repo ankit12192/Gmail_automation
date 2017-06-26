@@ -11,10 +11,10 @@ step to run
 python Email_sel.py
 """
 
-
 #---------------------------
 #	Importing Modules
 #---------------------------
+
 __author__ = 'Ankit'
 import  requests
 import requests.exceptions
@@ -42,17 +42,44 @@ browser = webdriver.Chrome(chromedriver)
 browser.get("https://accounts.google.com/ServiceLogin?service=mail&continue=https://mail.google.com/mail/#identifier")
 x='No messages matched your search'
 
+
+'''
+Implemented new way to find element and perform timeout
+
+time  ==> Timeout
+value ==> Identifier
+key   ==> Send keys value
+byWhat==> ID by which element will be searched
+input ==> C = Click() S = sendkeys()
+
+'''
+
+def wait_and_send( time,value,key,byWhat="By.ID",input=""):
+
+    try:
+        el = WebDriverWait(browser,time).until(
+        EC.presence_of_element_located((eval(byWhat),value))
+        )
+        if input == "C":
+            el.click()
+        if input == "S":
+            el.send_keys(key)
+    except:
+        print EC.NoSuchElementException
+        print "ID",value,"Not found "
+
+
 def login_gmail(email,password):
 
   start_time = time.time()
-  browser.find_element_by_name('Email').send_keys(email+Keys.ENTER)
-  time.sleep(2)
-  browser.find_element_by_name('Passwd').send_keys(password+Keys.ENTER)
+  wait_and_send(10,"identifier",email+Keys.ENTER,"By.NAME","S")
+  wait_and_send(10, "password", password+Keys.ENTER, "By.NAME", "S")
   total_time=time.time()-start_time
   print("--- %s seconds ---" % (time.time() - start_time))
   Time_list.append(total_time)
 
 def send_mail(n,to,ch):
+
     start_time = time.time()
     for i in xrange(int(n)):
         browser.find_element_by_xpath("//*[@gh='cm']").click()
@@ -240,7 +267,7 @@ def del_particular_email(m):
 def main():
     start_time = time.time()
     time.sleep(2)
-    login_gmail("atp12192","qwer12192")
+    login_gmail("atp12192","Ankrich5063")
     time.sleep(6)
     send_mail(1,"ank9222@gmail.com","TH")
     time.sleep(4)
